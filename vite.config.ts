@@ -11,11 +11,14 @@ export default defineConfig({
   },
   server: {
     port: 5500,
+    allowedHosts: [
+      '.trycloudflare.com'
+    ],
     proxy: {
       '/api': {
         // Override with VITE_API_PROXY_TARGET when the backend runs on a
-        // different port (for example 8081 because 8080 is already in use).
-        target: process.env.VITE_API_PROXY_TARGET ?? 'http://localhost:8080',
+        // different port (for example 5502 because 5501 is already in use).
+        target: process.env.VITE_API_PROXY_TARGET ?? 'http://localhost:5501',
         changeOrigin: true,
       },
     },

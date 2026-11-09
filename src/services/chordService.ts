@@ -2,9 +2,10 @@ import api from '@/lib/api'
 import type { Chord } from '@/types'
 
 export const chordService = {
-  async getChords(guitarType?: string): Promise<Chord[]> {
-    const params: Record<string, string> = {}
-    if (guitarType) params.guitarType = guitarType
+  async getChords(params?: { guitarType?: string; category?: string }): Promise<Chord[]> {
+    const query: Record<string, string> = {}
+    if (params?.guitarType) query.guitarType = params.guitarType
+    if (params?.category) query.category = params.category
     const { data } = await api.get<Chord[]>('/chords', { params })
     return data
   },

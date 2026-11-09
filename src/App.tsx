@@ -32,6 +32,21 @@ const LessonPage = lazy(() =>
 const ChordsPage = lazy(() =>
   import('@/features/chords/ChordsPage').then((module) => ({ default: module.ChordsPage })),
 )
+const StrummingPatternsPage = lazy(() =>
+  import('@/features/strumming/StrummingPatternsPage').then((module) => ({ default: module.StrummingPatternsPage })),
+)
+const StrummingPatternDetailPage = lazy(() =>
+  import('@/features/strumming/StrummingPatternDetailPage').then((module) => ({ default: module.StrummingPatternDetailPage })),
+)
+const SongsPage = lazy(() =>
+  import('@/features/song/SongsPage').then((module) => ({ default: module.SongsPage })),
+)
+const SongDetailPage = lazy(() =>
+  import('@/features/song/SongDetailPage').then((module) => ({ default: module.SongDetailPage })),
+)
+const LearningMethodsPage = lazy(() =>
+  import('@/features/learning/LearningMethodsPage').then((module) => ({ default: module.LearningMethodsPage })),
+)
 const ProgressPage = lazy(() =>
   import('@/features/progress/ProgressPage').then((module) => ({ default: module.ProgressPage })),
 )
@@ -63,6 +78,14 @@ export default function App() {
         </Route>
 
         <Route path="chords" element={<ChordsPage />} />
+        <Route path="strumming-patterns" element={<StrummingPatternsPage />} />
+        <Route
+          path="strumming-patterns/:id"
+          element={<StrummingPatternDetailPage />}
+        />
+        <Route path="songs" element={<SongsPage />} />
+        <Route path="songs/:id" element={<SongDetailPage />} />
+        <Route path="learning-methods" element={<LearningMethodsPage />} />
         <Route
           path="progress"
           element={

@@ -5,8 +5,9 @@ interface Props {
 }
 
 /**
- * HGuitar logo: a guitar neck and headstock, tilted like a guitar being held.
- * Strictly two brand colours — purple (#6D28D9) and white.
+ * HGuitar logo: a full acoustic-style guitar (headstock, neck, body),
+ * tilted like it's being held. Strictly two brand colours — purple (#6D28D9) and white.
+ * Background stays upright; only the guitar inside rotates.
  */
 export function GuitarMark({ className }: Props) {
   return (
@@ -17,22 +18,35 @@ export function GuitarMark({ className }: Props) {
       className={cn('h-9 w-9', className)}
       xmlns="http://www.w3.org/2000/svg"
     >
+      {/* Upright purple background (not rotated) */}
       <rect width="48" height="48" rx="14" fill="#6D28D9" />
 
-      <g transform="rotate(-13 24 24)">
-        {/* Headstock, separated from the neck by a purple gap */}
-        <rect x="13" y="2" width="22" height="8" rx="3" fill="#FFFFFF" />
+      <g transform="rotate(-20 24 24)">
+        {/* Headstock */}
+        <rect x="19" y="3" width="10" height="6" rx="2" fill="#FFFFFF" />
 
         {/* Neck / fretboard */}
-        <rect x="18" y="12.5" width="12" height="27" rx="3" fill="#FFFFFF" />
-
-        {/* Nut */}
-        <line x1="18" y1="13.5" x2="30" y2="13.5" stroke="#6D28D9" strokeWidth="1.8" />
+        <rect x="21" y="9" width="6" height="14" rx="1.5" fill="#FFFFFF" />
 
         {/* Frets */}
-        {[19, 25, 31].map((y) => (
-          <line key={y} x1="18" y1={y} x2="30" y2={y} stroke="#6D28D9" strokeWidth="1.7" />
+        {[12, 15, 18].map((y) => (
+          <line
+            key={y}
+            x1="21"
+            y1={y}
+            x2="27"
+            y2={y}
+            stroke="#6D28D9"
+            strokeWidth="1.2"
+            strokeLinecap="round"
+          />
         ))}
+
+        {/* Body */}
+        <ellipse cx="24" cy="31" rx="9" ry="7" fill="#FFFFFF" />
+
+        {/* Soundhole */}
+        <circle cx="24" cy="31" r="2.5" fill="none" stroke="#6D28D9" strokeWidth="1.2" />
       </g>
     </svg>
   )

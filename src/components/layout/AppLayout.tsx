@@ -53,6 +53,12 @@ export function AppLayout() {
                 <Link to="/chords" className="text-cream-200/70 transition hover:text-cream-50">
                   {t('nav.chords')}
                 </Link>
+                <Link to="/strumming-patterns" className="text-cream-200/70 transition hover:text-cream-50">
+                  {t('nav.strumming')}
+                </Link>
+                <Link to="/songs" className="text-cream-200/70 transition hover:text-cream-50">
+                  {t('nav.songs')}
+                </Link>
                 <Link to="/progress" className="text-cream-200/70 transition hover:text-cream-50">
                   {t('nav.progress')}
                 </Link>

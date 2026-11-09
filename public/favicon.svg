@@ -1,8 +1,23 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64" role="img" aria-label="HGuitar">
-  <rect width="64" height="64" rx="18" fill="#6D28D9"/>
-  <g transform="rotate(-13 32 32)">
-    <rect x="17" y="3" width="30" height="11" rx="4" fill="#FFFFFF"/>
-    <rect x="24" y="17" width="16" height="36" rx="4" fill="#FFFFFF"/>
-    <path d="M24 18.5h16M24 26h16M24 33.5h16M24 41h16" stroke="#6D28D9" stroke-width="2.2"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="64" height="64" role="img" aria-label="HGuitar">
+  <!-- Upright purple background (matches website logo) -->
+  <rect width="48" height="48" rx="14" fill="#6D28D9" />
+
+  <g transform="rotate(-20 24 24)">
+    <!-- Headstock -->
+    <rect x="19" y="3" width="10" height="6" rx="2" fill="#FFFFFF" />
+
+    <!-- Neck / fretboard -->
+    <rect x="21" y="9" width="6" height="14" rx="1.5" fill="#FFFFFF" />
+
+    <!-- Frets -->
+    <line x1="21" y1="12" x2="27" y2="12" stroke="#6D28D9" stroke-width="1.2" stroke-linecap="round" />
+    <line x1="21" y1="15" x2="27" y2="15" stroke="#6D28D9" stroke-width="1.2" stroke-linecap="round" />
+    <line x1="21" y1="18" x2="27" y2="18" stroke="#6D28D9" stroke-width="1.2" stroke-linecap="round" />
+
+    <!-- Body -->
+    <ellipse cx="24" cy="31" rx="9" ry="7" fill="#FFFFFF" />
+
+    <!-- Soundhole -->
+    <circle cx="24" cy="31" r="2.5" fill="none" stroke="#6D28D9" stroke-width="1.2" />
   </g>
 </svg>

@@ -89,6 +89,10 @@ export interface LessonBlock {
 }
 
 // ── Music ─────────────────────────────────────────────────────────────────────
+export type GuitarDifficulty = 'BEGINNER' | 'INTERMEDIATE' | 'ADVANCED'
+
+export type ChordCategory = 'MAJOR' | 'MINOR' | 'DOMINANT_7' | 'MAJOR_7' | 'MINOR_7' | 'SUSPENDED'
+
 export interface ChordPosition {
   id: string
   positionNumber: number
@@ -100,8 +104,98 @@ export interface Chord {
   id: string
   name: string
   guitarType: GuitarType
+  category: ChordCategory
   description: string
   positions: ChordPosition[]
+}
+
+// ── Strumming patterns ────────────────────────────────────────────────────────
+export type StrummingDifficulty = 'BEGINNER' | 'INTERMEDIATE' | 'ADVANCED'
+export type StrummingGuitarType = 'ACOUSTIC' | 'CLASSICAL' | 'ALL'
+
+export interface StrummingInstruction {
+  id: string
+  stepNumber: number
+  title: string
+  content: string
+  tip: string | null
+}
+
+export interface StrummingPattern {
+  id: string
+  name: string
+  formula: string
+  description: string
+  difficulty: StrummingDifficulty
+  guitarType: StrummingGuitarType
+  bpmMin: number | null
+  bpmMax: number | null
+  isFormula: boolean
+  status: PublicationStatus
+  sortOrder: number
+  createdAt: string
+}
+
+export interface StrummingPatternDetail extends StrummingPattern {
+  instructions: StrummingInstruction[]
+}
+
+// ── Songs ─────────────────────────────────────────────────────────────────────
+export type SongSource = 'VIETNAMESE' | 'FOREIGN'
+
+export interface SongChord {
+  id: string
+  chordId: string
+  chordName: string
+  sortOrder: number
+  isRequired: boolean
+}
+
+export interface SongSection {
+  id: string
+  sectionType: 'INTRO' | 'VERSE' | 'CHORUS' | 'BRIDGE' | 'OUTRO'
+  sectionOrder: number
+  name: string | null
+  chordProgression: string
+  strummingPatternId: string | null
+}
+
+export interface Song {
+  id: string
+  guitarType: GuitarType
+  difficulty: GuitarDifficulty
+  source: SongSource
+  originalKey: string | null
+  capoFret: number
+  bpm: number | null
+  strummingPatternId: string | null
+  isFormula: boolean
+  status: PublicationStatus
+  sortOrder: number
+  createdAt: string
+  title: string
+  artist: string
+  description: string | null
+  chords: SongChord[]
+  sections: SongSection[]
+}
+
+// ── Learning methods ──────────────────────────────────────────────────────────
+export type LearningMethodGuitar = 'ACOUSTIC' | 'CLASSICAL' | 'ALL'
+
+export interface LearningMethod {
+  id: string
+  nameKey: string
+  difficulty: GuitarDifficulty
+  targetGuitar: LearningMethodGuitar
+  estimatedWeeks: number
+  stepsCount: number
+  status: PublicationStatus
+  sortOrder: number
+  createdAt: string
+  title: string
+  description: string
+  steps: string[]
 }
 
 // ── Assessment ────────────────────────────────────────────────────────────────

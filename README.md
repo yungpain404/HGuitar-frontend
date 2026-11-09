@@ -74,7 +74,7 @@ The client never stores plaintext passwords or tokens. Authorization is enforced
 ## Requirements
 
 - **Node.js 20+**
-- **Backend API** running at `http://localhost:8080` (configurable via `VITE_API_PROXY_TARGET`)
+- **Backend API** running at `http://localhost:5501` (configurable via `VITE_API_PROXY_TARGET`)
 
 The dev server runs on **http://localhost:5500** and proxies `/api` to the backend.
 
@@ -91,7 +91,7 @@ cp .env.example .env.local
 npm run dev
 ```
 
-Open **http://localhost:5500** in your browser. The API proxy forwards `/api/**` to `http://localhost:8080` by default (see `vite.config.ts`).
+Open **http://localhost:5500** in your browser. The API proxy forwards `/api/**` to `http://localhost:5501` by default (see `vite.config.ts`).
 
 If the backend runs on a different port:
 
@@ -119,8 +119,8 @@ VITE_FIREBASE_PROJECT_ID=your-project-id
 VITE_FIREBASE_APP_ID=
 VITE_FIREBASE_MESSAGING_SENDER_ID=
 
-# Optional: override the API proxy target (default: http://localhost:8080)
-VITE_API_PROXY_TARGET=http://localhost:8080
+# Optional: override the API proxy target (default: http://localhost:5501)
+VITE_API_PROXY_TARGET=http://localhost:5501
 ```
 
 > **Never commit real values.** `.env.local` is local-only and must not be tracked. Only `.env.example` with placeholders is committed.

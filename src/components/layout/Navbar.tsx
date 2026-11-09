@@ -8,8 +8,10 @@ import { cn } from '@/lib/cn'
 
 function navLinkClass({ isActive }: { isActive: boolean }) {
   return cn(
-    'relative py-2 text-sm font-medium transition-colors hover:text-ink',
-    isActive ? 'text-ink' : 'text-ink/55',
+    'px-3 py-1.5 rounded-full text-sm font-medium transition-all duration-200 ease-out',
+    isActive
+      ? 'bg-white text-ink shadow-sm'
+      : 'text-ink/60 hover:text-ink hover:bg-ink/5',
   )
 }
 
@@ -46,36 +48,21 @@ export function Navbar() {
         </Link>
 
         <nav aria-label={t('nav.mainLabel')} className="hidden items-center gap-7 sm:flex">
-          <NavLink to="/learn" className={navLinkClass}>
-            {({ isActive }) => (
-              <>
-                {t('nav.learn')}
-                {isActive && (
-                  <span className="absolute -bottom-0.5 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-grape-600" />
-                )}
-              </>
-            )}
+          <NavLink to="/learn" className={({ isActive }) => navLinkClass({ isActive })}>
+            {t('nav.learn')}
           </NavLink>
-          <NavLink to="/chords" className={navLinkClass}>
-            {({ isActive }) => (
-              <>
-                {t('nav.chords')}
-                {isActive && (
-                  <span className="absolute -bottom-0.5 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-grape-600" />
-                )}
-              </>
-            )}
+          <NavLink to="/chords" className={({ isActive }) => navLinkClass({ isActive })}>
+            {t('nav.chords')}
+          </NavLink>
+          <NavLink to="/strumming-patterns" className={({ isActive }) => navLinkClass({ isActive })}>
+            {t('nav.strumming')}
+          </NavLink>
+          <NavLink to="/songs" className={({ isActive }) => navLinkClass({ isActive })}>
+            {t('nav.songs')}
           </NavLink>
           {isLoggedIn && (
-            <NavLink to="/progress" className={navLinkClass}>
-              {({ isActive }) => (
-                <>
-                  {t('nav.progress')}
-                  {isActive && (
-                    <span className="absolute -bottom-0.5 left-1/2 h-1 w-1 -translate-x-1/2 rounded-full bg-grape-600" />
-                  )}
-                </>
-              )}
+            <NavLink to="/progress" className={({ isActive }) => navLinkClass({ isActive })}>
+              {t('nav.progress')}
             </NavLink>
           )}
         </nav>

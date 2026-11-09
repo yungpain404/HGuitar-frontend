@@ -10,11 +10,25 @@ import { ErrorState } from '@/components/ui/ErrorState'
 import { LoadingState } from '@/components/ui/LoadingState'
 import { useDocumentTitle } from '@/hooks/useDocumentTitle'
 import { cn } from '@/lib/cn'
-import type { GuitarType } from '@/types'
+import type { ChordCategory } from '@/types'
 
-type ChordFilter = GuitarType | 'ALL'
+type ChordFilter = ChordCategory | 'ALL'
 
-const FILTERS: ChordFilter[] = ['ALL', 'ACOUSTIC', 'CLASSICAL']
+const FILTERS: ChordFilter[] = ['ALL', 'MAJOR', 'MINOR', 'DOMINANT_7', 'MAJOR_7', 'MINOR_7', 'SUSPENDED']
+
+const CATEGORY_LABEL_KEYS: Record<ChordCategory, string> = {
+  MAJOR: 'chords.categoryMajor',
+  MINOR: 'chords.categoryMinor',
+  DOMINANT_7: 'chords.categoryDominant7',
+  MAJOR_7: 'chords.categoryMajor7',
+  MINOR_7: 'chords.categoryMinor7',
+  SUSPENDED: 'chords.categorySuspended',
+}
+
+const FILTER_LABEL_KEYS: Record<ChordFilter, string> = {
+  ALL: 'chords.all',
+  ...CATEGORY_LABEL_KEYS,
+}
 
 export function ChordsPage() {
   const { t } = useTranslation()
@@ -23,7 +37,7 @@ export function ChordsPage() {
 
   const { data: chords, isLoading, isError, refetch } = useQuery({
     queryKey: ['chords', filter],
-    queryFn: () => chordService.getChords(filter === 'ALL' ? undefined : filter),
+    queryFn: () => chordService.getChords({ category: filter === 'ALL' ? undefined : filter }),
   })
 
   return (
@@ -52,9 +66,7 @@ export function ChordsPage() {
                 : 'border-ink/15 bg-cream-50 text-ink/60 hover:border-ink/40 hover:text-ink',
             )}
           >
-            {value === 'ALL' && t('chords.all')}
-            {value === 'ACOUSTIC' && t('guitar.acoustic')}
-            {value === 'CLASSICAL' && t('guitar.classical')}
+            {t(FILTER_LABEL_KEYS[value])}
           </button>
         ))}
       </div>
@@ -71,51 +83,45 @@ export function ChordsPage() {
 
       {chords && chords.length > 0 && (
         <ul className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {chords.map((chord) => {
-            const isAcoustic = chord.guitarType === 'ACOUSTIC'
+          {chords.map((chord) => (
+            <li
+              key={chord.id}
+              className="card-lift group flex flex-col rounded-[2rem] border border-ink/10 bg-cream-50 p-5"
+            >
+              <h2 className="font-display text-3xl font-semibold text-ink">{chord.name}</h2>
+              <Badge variant="outline">
+                {t(CATEGORY_LABEL_KEYS[chord.category])}
+              </Badge>
 
-            return (
-              <li
-                key={chord.id}
-                className="card-lift group flex flex-col rounded-[2rem] border border-ink/10 bg-cream-50 p-5"
-              >
-                <div className="flex items-start justify-between gap-3">
-                  <h2 className="font-display text-3xl font-semibold text-ink">{chord.name}</h2>
-                  <Badge variant={isAcoustic ? 'amber' : 'default'}>
-                    {t(`guitar.${chord.guitarType.toLowerCase()}`)}
-                  </Badge>
+              {chord.positions.length > 0 ? (
+                <div className="mt-3 flex flex-wrap items-start justify-center gap-5 rounded-[1.5rem] bg-cream-100/80 px-3 py-4">
+                  {chord.positions.map((position) => (
+                    <figure key={position.id} className="flex flex-col items-center gap-1.5">
+                      <ChordDiagram
+                        name={chord.name}
+                        fingers={parseChordFingers(position.fingersJson)}
+                        baseFret={position.baseFret}
+                        className="w-28 transition duration-300 group-hover:scale-[1.03]"
+                      />
+                      {chord.positions.length > 1 && (
+                        <figcaption className="text-[10px] font-medium uppercase tracking-[0.12em] text-ink/55">
+                          {t('chords.positionN', { n: position.positionNumber })}
+                        </figcaption>
+                      )}
+                    </figure>
+                  ))}
                 </div>
+              ) : (
+                <p className="mt-3 rounded-2xl bg-cream-100 px-4 py-8 text-center text-xs text-ink/55">
+                  {t('chords.noPositions')}
+                </p>
+              )}
 
-                {chord.positions.length > 0 ? (
-                  <div className="mt-3 flex flex-wrap items-start justify-center gap-5 rounded-[1.5rem] bg-cream-100/80 px-3 py-4">
-                    {chord.positions.map((position) => (
-                      <figure key={position.id} className="flex flex-col items-center gap-1.5">
-                        <ChordDiagram
-                          name={chord.name}
-                          fingers={parseChordFingers(position.fingersJson)}
-                          baseFret={position.baseFret}
-                          className="w-28 transition duration-300 group-hover:scale-[1.03]"
-                        />
-                        {chord.positions.length > 1 && (
-                          <figcaption className="text-[10px] font-medium uppercase tracking-[0.12em] text-ink/55">
-                            {t('chords.positionN', { n: position.positionNumber })}
-                          </figcaption>
-                        )}
-                      </figure>
-                    ))}
-                  </div>
-                ) : (
-                  <p className="mt-3 rounded-2xl bg-cream-100 px-4 py-8 text-center text-xs text-ink/55">
-                    {t('chords.noPositions')}
-                  </p>
-                )}
-
-                {chord.description && (
-                  <p className="mt-4 text-sm leading-relaxed text-ink/55">{chord.description}</p>
-                )}
-              </li>
-            )
-          })}
+              {chord.description && (
+                <p className="mt-4 text-sm leading-relaxed text-ink/55">{chord.description}</p>
+              )}
+            </li>
+          ))}
         </ul>
       )}
     </PageShell>
