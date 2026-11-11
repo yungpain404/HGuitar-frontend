@@ -16,7 +16,14 @@ export const quizService = {
     attemptId: string,
     answers: { questionId: string; selectedAnswerId: string }[],
   ): Promise<QuizAttempt> {
-    const { data } = await api.post<QuizAttempt>(`/quiz-attempts/${attemptId}/submit`, { answers })
+    const answersMap: Record<string, string> = {}
+    for (const answer of answers) {
+      answersMap[answer.questionId] = answer.selectedAnswerId
+    }
+    const { data } = await api.post<QuizAttempt>(
+      `/quiz-attempts/${attemptId}/submit`,
+      { answers: answersMap },
+    )
     return data
   },
 
